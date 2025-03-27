@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Manual</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.quilljs.com/1.3.7/quill.snow.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="container mt-5">
+    <h1 class="mb-4">Edit Manual</h1>
+    <form action="/save" method="post" onsubmit="syncContent()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Manual Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          value="{{.Name}}"
+          placeholder="Manual Name"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label">Manual Content</label>
+        <div id="editor" style="height: 300px">{{.Content}}</div>
+        <textarea
+          id="content"
+          name="content"
+          class="form-control d-none"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/" class="btn btn-secondary">Back to List</a>
+    </form>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <script>
+      const quill = new Quill("#editor", {
+        theme: "snow",
+      });
+      quill.root.innerHTML = document.getElementById("editor").innerHTML;
+
+      function syncContent() {
+        document.getElementById("content").value = quill.root.innerHTML;
+      }
+    </script>
+  </body>
+</html>
